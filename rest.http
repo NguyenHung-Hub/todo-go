@@ -1,0 +1,45 @@
+@base = http://localhost:3001/v1
+
+GET http://localhost:3001/ping
+
+
+### 
+
+POST {{base}}/items
+Content-Type: application/json
+
+{
+    "title":"Task 12",
+    "description":"this is description task 12",
+    "status":"Done"
+}
+
+### 
+
+POST {{base}}/items
+Content-Type: application/json
+
+{
+    "title":"Task 11",
+    "description":"this is description task 11"
+}
+
+###
+GET {{base}}/items/10
+
+### 
+
+PUT {{base}}/items/19
+Content-Type: application/json
+
+{
+    "title":"Task 9 abs",
+    "description":"this is description task 9 update",
+    "status":"Done"
+}
+
+###
+DELETE  {{base}}/items/10
+
+###
+GET   {{base}}/items?page=1&limit=10&status=Doing
