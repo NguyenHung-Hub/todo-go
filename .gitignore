@@ -1,4 +1,4 @@
 .vscode
 .idea
 docs
-docker
+docker/mysql

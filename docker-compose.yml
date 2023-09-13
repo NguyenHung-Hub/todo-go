@@ -1,0 +1,42 @@
+version: "3"
+services:
+    todoapi:
+        build:
+            context: .
+        volumes:
+            - .:/app
+        ports:
+            - 3001:3001
+        networks:
+            - todonet
+        depends_on:
+            tododb:
+                condition: service_healthy
+
+    tododb:
+        image: mysql
+        container_name: tododb
+        ports:
+            - 3306:3306
+        volumes:
+            - ./docker/mysql:/var/lib/mysql
+            - ./docker/init/init.sql:/docker-entrypoint-initdb.d/init.sql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        networks:
+            - todonet
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:3306"]
+            interval: 30s
+            timeout: 20s
+            retries: 3
+            start_period: 30s
+    adminerblog:
+        image: adminer
+        restart: always
+        ports:
+            - "8081:8080"
+networks:
+    todonet:
+        driver: bridge
